@@ -30,10 +30,10 @@ class Answer:
     Inverted = ['i', 'ш', '.', '/', 'ю']
 
 
-def createConfig(path, TOKEN):
+def create_config(path, token):
     config = configparser.ConfigParser()
     config.add_section('Settings')
-    config.set('Settings', 'TOKEN', TOKEN)
+    config.set('Settings', 'TOKEN', token)
 
     with open(path, 'w') as config_file:
         config.write(config_file)
@@ -964,10 +964,10 @@ def stage0():
 
 # Если есть файл с токеном
 if os.path.isfile('gvk_config.ini'):
-    config = configparser.ConfigParser()
-    config.read('gvk_config.ini')
-    if 'TOKEN' in config['Settings']:
-        TOKEN = config['Settings']['TOKEN']
+    ini_config = configparser.ConfigParser()
+    ini_config.read('gvk_config.ini')
+    if 'TOKEN' in ini_config['Settings']:
+        TOKEN = ini_config['Settings']['TOKEN']
         if not ('error' in gj_account_get_profile_info()):
             stage0()
         else:
@@ -989,8 +989,7 @@ manual = '\n╔╗ ╔╗ ╔═══╗ ╔╗    ╔═══╗\n' \
 f'\n\nДля получения {shine("токена", "BOLD")} перейдите по {shine("↓↓ ссылке внизу ↓↓", "BOLD")}, подтвердите разрешения и скопируйте то, что появится' \
             f' в изменившейся адресной строке браузера между {shine("access_token=", "GOLD")} и литерой {shine("&", "GOLD")}' \
             f'\n\nЛибо сформируйте запрос самостоятельно при помощи данного сайта: {shine("https://vkhost.github.io/", "GOLD")}\n\n' \
-            f'\n{shine("↓↓↓ТА САМАЯ ССЫЛКА↓↓↓", "BOLD")}\n\n{shine("<...>", "GOLD")}' \
-            f'{shine("<...>", "GOLD")}\n\n\n{shine("...и наконец,", "BOLD")}'
+            f'\n{shine("↓↓↓ТА САМАЯ ССЫЛКА↓↓↓", "BOLD")}\n\n{shine("<ИСПОЛЬЗУЙ МЕТОД ВЫШЕ>", "GOLD")}\n\n\n{shine("...и наконец,", "BOLD")}'
 
 while True:
     if TOKEN == '' or 'error' in gj_account_get_profile_info():
@@ -1007,8 +1006,8 @@ while True:
         break
 
 # Создаём файл с токеном
-path = 'gvk_config.ini'
-createConfig(path, TOKEN)
+ini_path = 'gvk_config.ini'
+create_config(ini_path, TOKEN)
 
 # Начинаем приключение
 stage0()
