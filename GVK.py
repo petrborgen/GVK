@@ -1,6 +1,9 @@
+#!/usr/bin/env python3
+
 import time
 import requests
 import os
+from sys import platform
 import copy
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor as PoolExecutor
@@ -17,7 +20,11 @@ groups_search = 'https://api.vk.com/method/groups.search'
 account_getProfileInfo = 'https://api.vk.com/method/account.getProfileInfo'
 
 egyptian_power = None
-slash = '\\'
+
+if platform.startswith('linux'):
+    slash = '/'
+else:
+    slash = '\\'
 
 
 class Answer:
@@ -332,7 +339,7 @@ def photo_save(photo_items, album_dir):
     max_size = 'photo_' + str(max_size)
 
     # Вытаскиваем название файла на сервере
-    file_name = photo_items[max_size].rpartition('/')[2]
+    file_name = photo_items[max_size].rpartition('?size')[0].rpartition('/')[2]
 
     # Проверяем, что в директории сохранения нет ещё файла с таким именем
     check_file = os.path.exists(album_dir + '\\' + file_name)
